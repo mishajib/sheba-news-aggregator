@@ -1,0 +1,14 @@
+/node_modules
+.env
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+/.yarn
+.yarnrc.yml
+/yarn.lock
+/package-lock.json
+/data

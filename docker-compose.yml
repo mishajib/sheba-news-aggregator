@@ -1,0 +1,38 @@
+services:
+  mongo:
+    container_name: sheba-mongo
+    image: mongo
+    expose:
+      - "27017"
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - sheba-docker-network
+
+  app:
+    container_name: sheba-app
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    depends_on:
+      - mongo
+    networks:
+      - sheba-docker-network
+
+  nginx:
+    container_name: sheba-nginx
+    image: nginx
+    ports:
+      - "${NGINX_PORT}:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - sheba-docker-network
+
+networks:
+  sheba-docker-network:
